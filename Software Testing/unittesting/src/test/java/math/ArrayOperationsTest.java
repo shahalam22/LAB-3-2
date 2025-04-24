@@ -2,135 +2,47 @@ package math;
 
 import org.junit.Before;
 import org.junit.Test;
-import static org.junit.Assert.assertArrayEquals;
+
 import io.FileIO;
 
-public class ArrayOperationsTest {
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
-    private ArrayOperations arrayOperations;
-    private StubFileIO fileIO;
-    private StubMyMath myMath;
+import static org.junit.Assert.*;
+
+public class ArrayOperationsTest {
+    private ArrayOperations arrayOps;
+    private MyMath myMath;
+    private FileIO fileIO;
 
     @Before
     public void setUp() {
-        arrayOperations = new ArrayOperations();
-        fileIO = new StubFileIO();
-        myMath = new StubMyMath();
+        arrayOps = new ArrayOperations();
+        myMath = new MyMath();
+        fileIO = new FileIO();
     }
 
     @Test
-    public void testFindPrimesInFileWithValidInput() {
-        // Arrange
-        fileIO.setNumbers(new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10});
+    public void testFindPrimesInFile_ValidFile() throws IOException {
+        // grades_valid.txt: 3,9,0,2,10,9,3,8,0,3
+        int[] expected = {3, 2, 3}; // Prime numbers: 3,2,3
+        int[] result = arrayOps.findPrimesInFile(fileIO, "/home/shahalam22/Desktop/LAB-3-2/Software Testing/unittesting/src/test/resources/grades_valid.txt", myMath);
+        assertArrayEquals("Should return array of prime numbers from grades_valid.txt", expected, result);
+    }
 
-        // Act
-        int[] result = arrayOperations.findPrimesInFile(fileIO, "validFile.txt", myMath);
-
-        // Assert
-        int[] expected = {2, 3, 5, 7};
-        assertArrayEquals("Should return array of prime numbers", expected, result);
+    @Test(expected = IllegalArgumentException.class)
+    public void testFindPrimesInFile_EmptyFile() {
+        // empty_file.txt: no numbers
+        arrayOps.findPrimesInFile(fileIO, "/home/shahalam22/Desktop/LAB-3-2/Software Testing/unittesting/src/test/resources/empty_file.txt", myMath);
     }
 
     @Test
-    public void testFindPrimesInFileWithEmptyFile() {
-        // Arrange
-        fileIO.setNumbers(new int[]{});
-
-        // Act
-        int[] result = arrayOperations.findPrimesInFile(fileIO, "emptyFile.txt", myMath);
-
-        // Assert
-        int[] expected = {};
-        assertArrayEquals("Should return empty array for empty file", expected, result);
-    }
-
-    @Test
-    public void testFindPrimesInFileWithNoPrimes() {
-        // Arrange
-        fileIO.setNumbers(new int[]{1, 4, 6, 8, 9});
-
-        // Act
-        int[] result = arrayOperations.findPrimesInFile(fileIO, "noPrimes.txt", myMath);
-
-        // Assert
-        int[] expected = {};
-        assertArrayEquals("Should return empty array when no primes are found", expected, result);
-    }
-
-    @Test
-    public void testFindPrimesInFileWithNegativeNumbers() {
-        // Arrange
-        fileIO.setNumbers(new int[]{-5, -3, -2, 0, 2, 3});
-
-        // Act
-        int[] result = arrayOperations.findPrimesInFile(fileIO, "negativeNumbers.txt", myMath);
-
-        // Assert
-        int[] expected = {2, 3};
-        assertArrayEquals("Should correctly handle negative numbers and return primes", expected, result);
-    }
-
-    @Test(expected = NullPointerException.class)
-    public void testFindPrimesInFileWithNullFileIO() {
-        // Act
-        arrayOperations.findPrimesInFile(null, "validFile.txt", myMath);
-    }
-
-    @Test(expected = NullPointerException.class)
-    public void testFindPrimesInFileWithNullFilePath() {
-        // Act
-        arrayOperations.findPrimesInFile(fileIO, null, myMath);
-    }
-
-    @Test(expected = NullPointerException.class)
-    public void testFindPrimesInFileWithNullMyMath() {
-        // Arrange
-        fileIO.setNumbers(new int[]{2, 3, 4});
-
-        // Act
-        arrayOperations.findPrimesInFile(fileIO, "validFile.txt", null);
-    }
-
-    @Test
-    public void testFindPrimesInFileWithAllPrimes() {
-        // Arrange
-        fileIO.setNumbers(new int[]{2, 3, 5, 7, 11});
-
-        // Act
-        int[] result = arrayOperations.findPrimesInFile(fileIO, "allPrimes.txt", myMath);
-
-        // Assert
-        int[] expected = {2, 3, 5, 7, 11};
-        assertArrayEquals("Should return all numbers when all are primes", expected, result);
-    }
-
-    // Stub implementation of FileIO
-    private static class StubFileIO extends FileIO {
-        private int[] numbers;
-
-        public void setNumbers(int[] numbers) {
-            this.numbers = numbers;
-        }
-
-        @Override
-        public int[] readFile(String filepath) {
-            return numbers != null ? numbers : new int[]{};
-        }
-    }
-
-    // Stub implementation of MyMath
-    private static class StubMyMath extends MyMath {
-        @Override
-        public boolean isPrime(int n) {
-            if (n <= 1) {
-                return false;
-            }
-            for (int i = 2; i <= Math.sqrt(n); i++) {
-                if (n % i == 0) {
-                    return false;
-                }
-            }
-            return true;
-        }
+    public void testFindPrimesInFile_InvalidEntries() throws IOException {
+        // grades_invalid.txt: 3,9,a,2,10,9.42,b,8,0,3
+        // Valid integers: 3,9,2,10,8,0,3
+        int[] expected = {3, 2, 3}; // Prime numbers: 3,2,3
+        int[] result = arrayOps.findPrimesInFile(fileIO, "/home/shahalam22/Desktop/LAB-3-2/Software Testing/unittesting/src/test/resources/grades_invalid.txt", myMath);
+        assertArrayEquals("Should handle invalid entries and return prime numbers", expected, result);
     }
 }

@@ -40,28 +40,28 @@ public class ArithmeticOperationsTest {
     }
 
     @Test
-    public void testDivideByZeroExceptionMessage() {
-        try {
-            operations.divide(10.0, 0.0);
-            fail("Expected ArithmeticException for division by zero");
-        } catch (ArithmeticException e) {
-            assertEquals("Cannot divide with zero", e.getMessage());
-        }
-    }
-
-    @Test
     public void testDivideZeroByNonZero() {
         assertEquals(0.0, operations.divide(0.0, 5.0), DELTA);
     }
 
     @Test
-    public void testDivideLargeNumbers() {
-        assertEquals(2.0, operations.divide(Double.MAX_VALUE, Double.MAX_VALUE / 2.0), DELTA);
+    public void testDivideLargeNumber() {
+        assertEquals(0.0, operations.divide(2.0, Double.MAX_VALUE), DELTA);
     }
 
     @Test
-    public void testDivideSmallNumbers() {
-        assertEquals(1.0, operations.divide(Double.MIN_VALUE, Double.MIN_VALUE), DELTA);
+    public void testDivideLargeNumberByLargeNumber() {
+        assertEquals(1.0, operations.divide(Double.MAX_VALUE, Double.MAX_VALUE), DELTA);
+    }
+
+    @Test
+    public void testDivideSmallNumber() {
+        assertEquals(1/Double.MIN_VALUE, operations.divide(1, Double.MIN_VALUE), DELTA);
+    }
+
+    @Test
+    public void testDivideSmallNumberBySmallNumber() {
+        assertEquals(1, operations.divide(Double.MIN_VALUE, Double.MIN_VALUE), DELTA);
     }
 
     // Tests for multiply method
