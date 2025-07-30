@@ -1,0 +1,135 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}
+
+/* Base styles */
+.app-container {
+  min-height: 100vh;
+  transition: all 0.3s ease;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideIn {
+  from { transform: translateX(-20px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+/* Component animations */
+.paper-container {
+  animation: fadeIn 0.4s ease-out;
+}
+
+.table-row {
+  animation: slideIn 0.3s ease-out;
+}
+
+/* Transitions */
+.MuiPaper-root {
+  transition: all 0.3s ease !important;
+}
+
+.MuiPaper-root:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1) !important;
+}
+
+.MuiButton-root {
+  transition: all 0.2s ease !important;
+}
+
+.MuiButton-root:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Table styles */
+.MuiTableRow-root {
+  transition: background-color 0.2s ease !important;
+}
+
+.MuiTableRow-root:hover {
+  background-color: rgba(0, 0, 0, 0.02) !important;
+}
+
+/* Form transitions */
+.MuiTextField-root {
+  transition: transform 0.2s ease !important;
+}
+
+.MuiTextField-root:focus-within {
+  transform: scale(1.02);
+}
+
+/* Tab transitions */
+.MuiTab-root {
+  transition: all 0.3s ease !important;
+}
+
+.MuiTab-root:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Chip animations */
+.MuiChip-root {
+  animation: fadeIn 0.3s ease-out;
+  transition: all 0.2s ease !important;
+}
+
+.MuiChip-root:hover {
+  transform: scale(1.05);
+}
+
+/* Loading spinner animation */
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+.loading-spinner {
+  animation: pulse 1.5s infinite ease-in-out;
+}

@@ -1,0 +1,80 @@
+# Smart Library System API Tests
+
+## Book Service APIs
+# Get all books
+curl http://localhost/api/books
+
+# Get a specific book
+curl http://localhost/api/books/1
+
+# Add a new book
+curl -X POST http://localhost/api/books/ \
+  -H "Content-Type: application/json" \
+  -d '{"title":"The Great Gatsby","author":"F. Scott Fitzgerald","isbn":"9780743273565","copies":5}'
+
+# Update a book
+curl -X PUT http://localhost/api/books/1 \
+  -H "Content-Type: application/json" \
+  -d '{"copies":10,"available_copies":8}'
+
+# Delete a book
+curl -X DELETE http://localhost/api/books/1
+
+# Verify book copies
+curl http://localhost/api/books/verify/1/copies
+
+# Decrease book copies
+curl -X PUT http://localhost/api/books/1/decrease
+
+# Increase book copies
+curl -X PUT http://localhost/api/books/1/increase
+
+# Get book statistics
+curl http://localhost/api/books/stats/overview
+
+## User Service APIs
+# Create a new user
+curl -X POST http://localhost/api/users/ \
+  -H "Content-Type: application/json" \
+  -d '{"name":"John Doe","email":"john@example.com","role":"student"}'
+
+# Get a user
+curl http://localhost/api/users/1
+
+# Verify user exists
+curl http://localhost/api/users/verify/1
+
+# Get total users count
+curl http://localhost/api/users/stats/total
+
+## Loan Service APIs
+# Create a new loan
+curl -X POST http://localhost/api/loans/ \
+  -H "Content-Type: application/json" \
+  -d '{"user_id":1,"book_id":1,"due_date":"2025-07-29T00:00:00"}'
+
+# Return a book
+curl -X POST http://localhost/api/loans/returns \
+  -H "Content-Type: application/json" \
+  -d '{"loan_id":1}'
+
+# Extend a loan
+curl -X PUT http://localhost/api/loans/1/extend \
+  -H "Content-Type: application/json" \
+  -d '{"extension_days":7}'
+
+# Get overdue loans
+curl http://localhost/api/loans/overdue
+
+# Get user's loan history
+curl http://localhost/api/loans/user/1
+
+# Get loan statistics
+curl http://localhost/api/loans/stats
+
+# Notes:
+# - Replace IDs (1) with actual IDs from your system
+# - Adjust dates in the loan creation to future dates
+# - All endpoints are accessed through the nginx reverse proxy on port 80
+# - Use -v flag for verbose output: curl -v ...
+# - Use -i flag to see response headers: curl -i ...

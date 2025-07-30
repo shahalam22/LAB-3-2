@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gomoku Game</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="min-h-screen flex items-center justify-center py-12 px-4">
+    <div class="container">
+        <div class="flex flex-col items-center">
+            <h1 class="game-title">Gomoku Game</h1>
+            
+            <div class="flex items-center justify-center w-full mb-6">
+                <div class="select-container">
+                    <select id="mode" class="select-styled">
+                        <option value="two_player">Two Player</option>
+                        <option value="ai">Player vs AI</option>
+                    </select>
+                </div>
+                <button id="start-btn" class="btn btn-primary">
+                    <i class="fas fa-play"></i>
+                    Start Game
+                </button>
+            </div>
+            
+            <div id="status" class="status-bar w-full mb-6"></div>
+            
+            <div class="board-container">
+                <div class="board-bg">
+                    <div id="board" class="grid gap-0" style="grid-template-columns: repeat(15, 32px);"></div>
+                </div>
+            </div>
+            
+            <button id="restart-btn" class="btn btn-success mt-6 hidden">
+                <i class="fas fa-redo"></i>
+                Restart Game
+            </button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

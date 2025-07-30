@@ -1,0 +1,40 @@
+# Virtual Environment
+.venv/
+*/.venv/
+**/.venv/
+venv/
+*/venv/
+**/venv/
+
+# Environment files
+.env
+*/.env
+**/.env
+
+# Python
+__pycache__/
+*/__pycache__/
+**/__pycache__/
+*.py[cod]
+*$py.class
+
+# SQLite database files
+*.db
+
+# Node.js
+node_modules/
+*/node_modules/
+**/node_modules/
+dist/
+build/
+
+# IDE
+.vscode/
+.idea/
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log

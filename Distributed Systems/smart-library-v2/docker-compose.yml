@@ -1,0 +1,76 @@
+version: '3.8'
+
+services:
+  nginx:
+    build:
+      context: .
+      dockerfile: nginx.Dockerfile
+    ports:
+      - "80:80"
+    depends_on:
+      - book-service
+      - user-service
+      - loan-service
+
+  postgres-book:
+    image: postgres:latest
+    environment:
+      - POSTGRES_DB=books_db
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_book_data:/var/lib/postgresql/data
+
+  postgres-user:
+    image: postgres:latest
+    environment:
+      - POSTGRES_DB=users_db
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_user_data:/var/lib/postgresql/data
+
+  postgres-loan:
+    image: postgres:latest
+    environment:
+      - POSTGRES_DB=loans_db
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - "5434:5432"
+    volumes:
+      - postgres_loan_data:/var/lib/postgresql/data
+
+  book-service:
+    build: ./book-service
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgres@postgres-book:5432/books_db
+    depends_on:
+      - postgres-book
+
+  user-service:
+    build: ./user-service
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgres@postgres-user:5432/users_db
+    depends_on:
+      - postgres-user
+
+  loan-service:
+    build: ./loan-service
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgres@postgres-loan:5432/loans_db
+      - USER_SERVICE_URL=http://user-service:8004/api
+      - BOOK_SERVICE_URL=http://book-service:8002/api
+    depends_on:
+      - postgres-loan
+      - user-service
+      - book-service
+
+volumes:
+  postgres_book_data:
+  postgres_user_data:
+  postgres_loan_data:

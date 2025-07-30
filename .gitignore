@@ -1,0 +1,51 @@
+# Ignore virtual environments
+.venv/
+venv/
+
+# Ignore PDFs
+*.pdf
+
+# Ignore large binary files
+*.zip
+*.rar
+*.7z
+*.tar
+*.gz
+*.iso
+*.exe
+*.dmg
+*.bin
+*.msi
+
+# Ignore media files
+*.mp4
+*.mov
+*.avi
+*.mkv
+*.mp3
+*.wav
+
+# Ignore Microsoft Office files
+*.ppt
+*.pptx
+*.doc
+*.docx
+*.xls
+*.xlsx
+
+# Ignore backup & temp files
+*.bak
+*.tmp
+*.swp
+*.old
+
+# System files
+.DS_Store
+Thumbs.db
+ehthumbs.db
+desktop.ini
+
+# Ignore node, Python, or Java-related dependencies (optional)
+node_modules/
+__pycache__/
+*.class
