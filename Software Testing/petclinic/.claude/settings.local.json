@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mvn:*)",
+      "Bash(chmod:*)",
+      "Bash(./run-crawljax.sh:*)"
+    ],
+    "deny": []
+  }
+}
