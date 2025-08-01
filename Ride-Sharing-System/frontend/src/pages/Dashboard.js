@@ -276,6 +276,21 @@ const Dashboard = () => {
     });
   };
 
+  const handleApplyToRide = async (rideId) => {
+    try {
+      await axios.post(`/api/rides/${rideId}/apply`);
+      // Refresh dashboard data after applying
+      fetchDashboardData();
+    } catch (error) {
+      console.error('Error applying to ride:', error);
+    }
+  };
+
+  const handleViewApplications = (rideId) => {
+    // Navigate to applications view - you may want to implement this route
+    console.log('View applications for ride:', rideId);
+  };
+
   if (loading) {
     return <div>Loading dashboard...</div>;
   }
