@@ -218,6 +218,29 @@ The application follows a **microservice architecture** with the following servi
 - **Query Parameters**: `status=posted|confirmed|completed|cancelled`
 - **Response**: `200` - List of ride requests
 
+**GET** `/api/rides/passenger`
+- **Description**: Get all ride requests for the authenticated passenger (Passengers only)
+- **Headers**: `Authorization: Bearer <token>`
+- **Query Parameters**: `status=posted|confirmed|completed|cancelled` (optional)
+- **Response**: `200` - List of passenger's ride requests with driver details
+- **Response Body**:
+  ```json
+  [
+    {
+      "rideRequestId": "ride_id",
+      "pickupLocation": "Shahbag, Dhaka",
+      "dropoffLocation": "Dhanmondi, Dhaka",
+      "targetTime": "2024-01-15T10:00:00.000Z",
+      "desiredFare": 150,
+      "status": "confirmed",
+      "driverId": "driver_user_id",
+      "driverName": "John Driver",
+      "driverPhone": "+1234567890",
+      "createdAt": "2024-01-15T08:00:00.000Z"
+    }
+  ]
+  ```
+
 #### Driver Applications
 
 **POST** `/api/rides/:rideRequestId/apply`

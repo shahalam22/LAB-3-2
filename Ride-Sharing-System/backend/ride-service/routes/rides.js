@@ -96,6 +96,47 @@ router.get('/', [
   }
 });
 
+// GET /api/rides/passenger - Passenger views their own ride requests
+router.get('/passenger', [
+  auth,
+  requireRole(['passenger'])
+], async (req, res) => {
+  try {
+    const { status } = req.query;
+    
+    let query = { passengerId: req.user.userId };
+    if (status) {
+      query.status = status;
+    }
+
+    const rideRequests = await RideRequest.find(query)
+      .sort({ createdAt: -1 });
+
+    const rides = await Promise.all(
+      rideRequests.map(async (ride) => {
+        const driverDetails = ride.driverId ? await getUserDetails(ride.driverId, req.token) : null;
+        return {
+          rideRequestId: ride._id,
+          pickupLocation: ride.pickupLocation,
+          dropoffLocation: ride.dropoffLocation,
+          targetTime: ride.targetTime,
+          desiredFare: ride.desiredFare,
+          status: ride.status,
+          driverId: ride.driverId,
+          driverName: driverDetails?.name || null,
+          driverPhone: driverDetails?.phone || null,
+          createdAt: ride.createdAt
+        };
+      })
+    );
+
+    res.json(rides);
+  } catch (error) {
+    console.error('Get passenger rides error:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
 // POST /api/rides/:rideRequestId/apply - Driver applies to a ride request
 router.post('/:rideRequestId/apply', [
   auth,
